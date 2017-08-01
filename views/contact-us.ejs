@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Your Request</title>
+	<style type="text/css">
+		body{
+			background-color: #464646;
+			font-family: verdana;
+			color: #fff;
+			padding: 30px;
+		}
+		h1{
+			font-size: 48px;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+		p{
+			font-size: 16px;
+		}
+	</style>
+</head>
+<body>
+
+  <h1>Hello!</h1>
+  <p>
+  	Your purchase request has been sent,<br/> and a response would be sent to you shortly, using these details<br/>
+
+  	<p>
+	Name: <%=  data.name %><br/>
+	email: <%= data.email %><br/>
+	phone number: <%= data.phone %><br/>
+	address: <%= data.address %><br/>
+	Message:<%if(data.message ==""){%>
+				No Message was left
+			<%}else{%>
+				<%=data.message%>
+				<%}%><br/>
+    Items ordered: <%=data.purchase_items%>
+	</p>
+
+	<form action="/contact" method="post">
+	if the above details are not correct resend by clicking 
+		<input type="Submit" value="Here" name="return_to_home">
+		A copy of your purchase request would be sent to the Email entered
+  	</form>
+
+  </p>
+	
+</body>
+</html>

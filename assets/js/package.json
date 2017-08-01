@@ -1,0 +1,24 @@
+{
+  "name": "forms-in-nodejs",
+  "version": "1.0.0",
+  "description": "collecting form values in the Qtee project",
+  "main": "main.js",
+  "dependencies": {
+    "formidable": "^1.1.1",
+    "nodemailer": "^4.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo\\Error: no test specified\\ && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/attaab/made_with_love/tree/master/Qtee/assets/js.git"
+  },
+  "keywords": [
+    "get",
+    "form"
+  ],
+  "author": "Ezekiel Saturday",
+  "license": "ISC"
+}
