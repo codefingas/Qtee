@@ -1,6 +1,7 @@
 # Qtee
 Flexible shopping system buildt with NODEjs-- for upcoming entrepreneurs<br/>
 who prefers a flexible system to handle customers requests..
+<img src="./assets/img/qtee.JPG" width="888px">
 <h1>How it works</h1><hr/>
 A user comes online...<br/>
 He sees a list of available items...<br/>
@@ -18,6 +19,12 @@ and then this "Information" - which includes:-<br/>
 (4). The User's description of how he wants his delivery handled<br/>
 Gets sent as Email ("Used Nodemailer for this -- Used BodyParser to collect the form details")<br/>
 to both the site's owner email address and the client..<br/>
+
+<h2>Running it on your localhost</h2>
+$ git clone or download as zip<br/>
+$ npm install<br/>
+$ npm start
+
 <br/>
 <br/>
 <h1>Remarks</h1><hr/>

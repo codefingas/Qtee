@@ -22,13 +22,13 @@ app.post("/page",urlencodedParser, function(req, res){
 	var transporter = nodemailer.createTransport({
         service : 'gmail',
         auth: {
-            user: 'udohezekiel34@gmail.com',
-            pass: 'conven3ntgmail'
+            user: 'deguggermode@gmail.com',
+            pass: 'gmaildebuggmode'
         }
     });
     var mailOptions = {
-        from: '${data.email}',
-        to: 'udohezekiel34@gmail.com, ${data.email}',
+        from: `${data.email}`,
+        to: `udohezekiel34@gmail.com, ${data.email}`,
         subject: 'subscribe request',
         html: `Hello! a user has subscribe to recieve information of recent updates<br/>
 				email: ${data.bottom}`,
@@ -48,17 +48,17 @@ app.post("/contact", function(req, res){
 
 app.post("/index", urlencodedParser, function(req, res){
 	res.render("contact-us", {data: req.body});
-	var data = req.body;
-	var transporter = nodemailer.createTransport({
-        service : 'gmail',
-        auth: {
-            user: 'udohezekiel34@gmail.com',
-            pass: 'conven3ntgmail'
-        }
-    });
+	var data = req.body,
+	transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: 'debuggmode@gmail.com',
+				pass: 'gmaildebuggmode'
+			}
+		});
     var mailOptions = {
-        from: '${data.email}',
-        to: 'udohezekiel34@gmail.com, ${data.email}',
+        from: `${data.email}`,
+        to: `udohezekiel34@gmail.com, ${data.email}`,
         subject: 'PURCHASE request',
         html: `<!DOCTYPE html>
 				<html>
