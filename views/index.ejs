@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>QTEE | Best Sellers</title>
+	<link rel="stylesheet" type="text/css" href="./assets/plugins/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./assets/plugins/font_awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/main.css">
+
+</head>
+<body>
+    
+    <!--==================== Modal=================== -->
+        <div id="myModal" class="modal fade text-center" role="dialog">
+          <div class="modal-dialog">
+
+            <!--================= Modal content========================-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="text-center">
+                    Your CART
+                    </h3>
+              </div>
+              <div class="modal-body">
+                  
+                 <form id="contact_form" method="POST" action="/index">
+                    <textArea id="payout_cart" name="purchase_items" readonly>
+                        
+                     </textArea>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="checkout_count">
+                               <h3 class="text-center"><span id="checkout_count">0</span><p>ITEMS</p>
+                                </h3> 
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="checkout_count">
+                                 <h3 class="text-center">
+                                     <span>$</span>
+                                    <span id="checkout_totalAmount">0</span>
+                                    <p>grand total<h6 class="text-center">*service charge has been included</h6></p>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+              <div class="modal-footer" style="
+                    padding-top: 8px;
+                ">
+                <h3 class="text-center">
+                    Enter Your Details
+                </h3>
+                <p class="text-center">Dont Worry We Hate Spam as much as you do</p>
+                     
+                    <label for="name">Your Full Name</label><br/>
+
+                    <input id="name" type="text" placeholder="Your full name*" name="name" required autofocus="autofocus"><br/>
+
+                    <label for="email">Your Email Address</label><br/>
+
+                    <input id="user_email" type="email" placeholder="Enter Email*" autocomplete="off" name="email" required><br/>
+
+                    <label for="phone">Your Phone Number</label><br/>
+
+                    <input id="user_number" type="number" placeholder="Enter Phone Number*" name="phone" autocomplete="off" required><br/>
+
+                     <label for="address">Delivery Address</label><br/>
+
+                        <input id="user_address" type="address" placeholder="Enter Your Address*" autocomplete="off" name="address" required><br/>
+                    <label for="message">Instructions</label><br>
+                     <textarea name="message" placeholder="Here you can tell us specific instructions on how you would like you order to be treated"></textarea>
+                        <input id="buy_button" type="submit" value="Buy" class="btn"  style="
+                            margin-top: 20px !important; background-color: #868686; color: white;
+                        "><br/>
+
+                    <p>
+                        <br/>
+                        <br/>
+                    <h4 class="success_writing">Thanks For Your Patronage</h4>
+                    </p>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    <!-- =============the cart area================== -->
+    <div id="sidenav" class="sidenav text-center">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeCartMenu();">&times</a>
+        <h1 id="count">0</h1>
+        <h5><i>items in your cart</i></h5>
+        <h1 class="margin_between">
+            <span>$</span>
+            <span id="totalAmount">0</span>
+        </h1>
+        <h6><i>total cart value</i>
+            <h6 class="text-center">*service charge has been included</h6>
+        </h6>
+
+        <button class="checkout_btn margin_between" disabled="disabled">YOUR ITEMS</button>
+             <ul id="cartItems">
+                 
+             </ul>
+             <div id="checkout_buttons">
+                 <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Checkout</button>
+                 <button class="btn" id="clear_cart">
+                     clear
+                 </button>
+             </div>
+        <div>
+           <button class="checkout_btn_continue margin_between" onclick="closeCartMenu();">
+            Continue Shopping
+           </button> 
+        </div>
+    </div>
+    <!-- ===================END OF CART AREA ======================-->
+    <!--====================== main page =================-->
+   <div id="main">
+       <header class="new_offer width_height">
+           <div class="text-center">
+               <p>FREE SHIPPING ON ALL ORDERS <strong>ABOVE</strong> +$150*</p>
+           </div>
+       </header>
+       <nav class="navbar width_height">
+           <div class="container">
+               <div class="navbar-header">
+                   <span class="small_screen_cart_control visible-xs visible-sm">
+                        <a href="#"><i style="color: white" class="fa fa-shopping-cart" onclick="openCartMenu();"></i>
+                        <span id="small_cart_count"></span>
+                        </a>
+                   </span>
+                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="background-color:  #d3d6d7;">
+                       <span class="icon-bar" style="background-color: #303030;"></span>
+                       <span class="icon-bar" style="background-color: #303030;"></span>
+                        <span class="icon-bar" style="background-color: #303030;"></span>
+                   </button>
+               </div>
+               <div class="collapse navbar-collapse" id="myNavbar">
+                   <ul class="nav navbar-nav navbar-right icons_nav">
+                       <li class="menu_control">
+                        <a href="#"><i class="glyphicon glyphicon-search"></i></a>
+                       </li>
+                       <li class="menu_control">
+                        <a href="#"><i class="fa fa-user"></i></a>
+                       </li>
+                       <li class="menu_control visible-md visible-lg">
+                        <a href="#"><i class="fa fa-shopping-cart" onclick="openCartMenu();"></i>
+                        <span id="cart_count"></span>
+                        </a>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+        </nav>
+        <div class="page-header text-center">
+            <img src="./assets/img/qtee_logo_d5675f44-8505-4ece-96de-edde09d9d5c8_250xbe9b.png">
+        </div>
+        <div class="container text-center container_page_sections" style=" font-size: 14px;">
+            <div id="nav_before_slideshow" class="text-center">
+                <ul class="nav navbar-nav pageNav">
+                    <li class="vertical_nav_item"><a href="#" data-toggle="tooltip" title="Doro bad">SHOP</a></li>
+                     <li class="vertical_nav_item"><a href="#" data-toggle="tooltip" title="Doro bad">APPAREL</a></li>
+                    <li class="vertical_nav_item"><a href="#" data-toggle="tooltip" title="Doro bad">SHOES</a></li>
+                    <li class="vertical_nav_item"><a href="#" data-toggle="tooltip" title="Doro bad">ACCESSORIES</a></li>
+                     <li class="vertical_nav_item"><a href="#" data-toggle="tooltip" title="Doro bad">CREATE YOUR OWN</a></li>
+                     <li class="vertical_nav_item"><a href="#" data-toggle="tooltip" title="Doro bad">QTEE REP</a></li>
+                     <li class="vertical_nav_item"><a href="#" data-toggle="tooltip" title="Doro bad">OUR CHARITY</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container text-center">
+            <div class="row margin_between">
+                <div class="col-sm-1 col-md-1">
+                    
+                </div>
+                <div class="col-sm-10 col-md-10">
+                    <img class="img-responsive" src="./assets/img/splash_best-sellers_2000x4cef.jpg" height="450">
+                </div>
+                <div class="col-sm-1 col-md-1">
+                    
+                </div>
+            </div>
+            <div class="row title_bar text-center margin_between">
+                 <h4 class="page_title">BEST SELLERS</h4>
+            </div>
+                 <p class="margin_between">
+                     Shop our most wanted t-shirts, tank tops, mini tanks, boyfriend tees, open back tees, crop tops, crewneck pull overs, hoodies and hats.
+                 </p>
+            <div class="row margin_between">
+                <div class="col-md-4">
+                    
+                </div>
+                <div class="col-md-4">
+                    <label>Shop By Budget</label><br/>
+                    $<input id="sort_tool" type="number" value="" name="" title="click shop to budget">
+                    <input type="button" value="shop" name="" onclick="budget();">
+                   <p id="budgetInfo" style="color: red;"></p>
+                </div>
+                <div class="col-md-4">
+                    
+                </div>
+            </div>
+
+    <div id="products">
+            <div class="container">
+                 <div id="budgetItem" class="row">
+               
+                </div>
+            </div>
+            <div class="row filter_select margin_between">
+                <div class="col-sm-2 col-md-2">
+                    <label>
+                        <h5>
+                            Filter
+                        </h5>
+                    </label>
+                    <select>
+                        <option>
+                            All products
+                        </option>
+                        <option>
+                            adventure
+                        </option>
+                        <option>
+                            Aloha
+                        </option>
+                        <option>
+                            beach
+                        </option>
+                        <option>
+                            Coconut
+                        </option>
+                        <option>
+                            Donut
+                        </option>
+                        <option>
+                            glaze craze
+                        </option>
+                        <option>
+                            La Playa Por Favour
+                        </option>
+                        <option>
+                            Mermaid
+                        </option>
+                        <option>
+                            Namastay
+                        </option>
+                    </select>
+                </div>
+                <div class="col-sm-8 col-md-8">
+                    
+                </div>
+                <div class="col-sm-2 col-md-2">
+                    <label>
+                        <h5>
+                            Sort
+                        </h5>
+                    </label>
+                    <select>
+                        <option>
+                            Featured
+                        </option>
+                        <option>
+                            Price, low to high
+                        </option>
+                        <option>
+                            Price high to low
+                        </option>
+                        <option>
+                            Alphabetically A-Z
+                        </option>
+                        <option>
+                           Alphabetically Z-A
+                        </option>
+                        <option>
+                            Date, new to old
+                        </option>
+                        <option>
+                            Date, old to new
+                        </option>
+                        <option>
+                            Best selling
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="container">
+                    <!-- ========First Row========== -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="aloha_container" class="card margin_between" data-name="Aloha-Boy-Short" data-price="10" data-img="./assets/img/Aloha_760x9923.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/Aloha_760x9923.jpg" width="262.5" height="262.5">
+                                    <p>
+                                        <h5>
+                                            Aloha Boy Short
+                                        </h5>
+                                         <h5>
+                                            $10
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="aloha_notify" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-3">
+                            <div id="crazy_container" class="card margin_between" data-name="Crazy-Coconuts-Canvas-Tote" data-price="14" data-img="./assets/img/Crazy-Coconuts-2_760x4996.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                     <img class="img-responsive" src="./assets/img/Crazy-Coconuts-2_760x4996.jpg" width="262.5" height="262.5">
+                                    <p>
+                                         <h5>
+                                           Crazy Coconuts Canvas Tote
+                                        </h5>
+                                         <h5>
+                                            $14
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="crazy_notify" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="dos_container" class="card margin_between" data-name="Dos-Pinas-cotton-Spandex-Crop-Tank" data-price="13" data-img="./assets/img/dos_pinas_sports_bra_760x0efb.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                     <img class="img-responsive" src="./assets/img/dos_pinas_sports_bra_760x0efb.jpg" width="262.5" height="262.5">
+                                    <p>
+                                         <h5>
+                                           Dos Pinas cotton Spandex Crop Tank
+                                        </h5>
+                                         <h5>
+                                            $13
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="dos" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="glaze_container" class="card margin_between" data-name="Glaze-craze-T-Strap-Tank" data-price="17" data-img="./assets/img/glaze_craze_tstrap_760x6d87.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                     <img class="img-responsive" src="./assets/img/glaze_craze_tstrap_760x6d87.jpg" width="262.5" height="262.5">
+                                    <p>
+                                          <h5>
+                                           Glaze craze T-Strap Tank
+                                        </h5>
+                                         <h5>
+                                            $17
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="glaze" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                   <!-- ========================SECOND ROW============-->
+
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="going_container" class="card margin_between" data-name="Going-Coconuts-Boy-Short" data-price="15" data-img="./assets/img/Crazy-Coconuts-2_760x4996.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/Coconut_760x20b9.jpg" width="262.5" height="262.5">
+                                    <p>
+                                         <h5>
+                                            Going Coconuts Boy Short
+                                        </h5>
+                                         <h5>
+                                            $15
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="going" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-3">
+                            <div id="playa_container" class="card margin_between" data-name="La-Playa-Por-Favor!-T-strap-Tank" data-price="20" data-img="./assets/img/la_playa_por_favor_tstrap_760x1794.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/la_playa_por_favor_tstrap_760x1794.jpg" width="262.5" height="262.5">
+                                    <p>
+                                         <h5>
+                                          La Playa Por Favor! T-strap Tank
+                                        </h5>
+                                         <h5>
+                                            $20
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="playa" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="mermaid_container" class="card margin_between" data-name="Mermaid-at-Heart-Loose-Crop-Top" data-price="23" data-img="./assets/img/mermaid_at_heart_loose_crop_760xe584.jpg" data-unit="per Kg">
+                                <div class="image_zoom">
+                                     <img class="img-responsive" src="./assets/img/mermaid_at_heart_loose_crop_760xe584.jpg" width="262.5" height="262.5">
+                                    <p>
+                                        <h5>
+                                           Mermaid at Heart Loose Crop Top
+                                        </h5>
+                                         <h5>
+                                            $25
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                     <p id="mermaid_top" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="namastay_container" class="card margin_between" data-name="Namast'ay-in-Bed-Cotton-Spandex-Crop-Tank" data-price="15" data-img="./assets/img/namastay_in_bed_sports_bra_760x541c.jpg" data-unit="per Kg">
+                                <div class="image_zoom">
+                                     <img class="img-responsive" src="./assets/img/namastay_in_bed_sports_bra_760x541c.jpg" width="262.5" height="262.5">
+                                    <p>
+                                        <h5>
+                                          Namast'ay in Bed Cotton Spandex Crop Tank
+                                        </h5>
+                                         <h5>
+                                            $15
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="namastay" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--==================THIRD ROW ============-->
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="muscle_container" class="card margin_between" data-name="Namaste-Beaches-Hi-Lo-Muscle-Tank" data-price="17" data-img="./assets/img/namaste_beaches_hi-lo_muscle_tank_760xa795.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/namaste_beaches_hi-lo_muscle_tank_760xa795.jpg" width="262.5" height="262.5">
+                                    <p>
+                                        <h5>
+                                            Namaste Beaches Hi-Lo Muscle Tank
+                                        </h5>
+                                         <h5>
+                                            $17 
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="muscle" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-3">
+                            <div id="beach_canvas" class="card margin_between" data-name="No-one-Likes-a-Shady-Beach-Canvas" data-price="14" data-img="./assets/img/Tote_Bag-White-No_One_Likes_A_Shady_Beach_760x6077.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/Tote_Bag-White-No_One_Likes_A_Shady_Beach_760x6077.jpg" width="262.5" height="262.5">
+                                    <p>
+                                          <h5>
+                                           No one Likes a Shady Beach Canvas
+                                        </h5>
+                                         <h5>
+                                            $14
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="beach" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="shady_beach" class="card margin_between" data-name="No-One-likes-a-Shady-Beach-Oversized-Boyfriend-Tee" data-price="14" data-img="./assets/img/mermaid_at_heart_loose_crop_760xe584.jpg" data-unit="per Kg">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/no-one-likes-a-shady-beach---blk-oversized-tee_760x48df.jpg" width="262.5" height="262.5">
+                                    <p>
+                                       <h5>
+                                          No One likes a Shady Beach Oversized Boyfriend Tee
+                                        </h5>
+                                         <h5>
+                                            $14
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="shady" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="racer_container" class="col-md-3">
+                            <div class="card margin_between" data-name="No-One-Likes-a-Shady-Beach-Long-Racer-Tank" data-price="15" data-img="./assets/img/namastay_in_bed_sports_bra_760x541c.jpg" data-unit="per Kg">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/No-one-likes-a-shady-beach---racer-tank_760xf79d.jpg" width="262.5" height="262.5">
+                                    <p>
+                                        <h5>
+                                           No One Likes a Shady Beach Long Racer Tank
+                                        </h5>
+                                         <h5>
+                                            $17
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="racer" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--=============FOURTH ROW=============-->
+
+                     <div class="row">
+                        <div class="col-md-3">
+                            <div id="open_back" class="card margin_between" data-name="No-One-Likes-a-Shady-Beach-Open-Back-Tee" data-price="17" data-img="./assets/img/no_one_likes_a_shady_beach_open_back_tee_760x9a19.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                     <img class="img-responsive" src="./assets/img/no_one_likes_a_shady_beach_open_back_tee_760x9a19.jpg" width="262.5" height="262.5">
+                                    <p>
+                                        <h5>
+                                            No One Likes a Shady Beach Open Back Tee
+                                        </h5>
+                                         <h5>
+                                            $17
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="open" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-3">
+                            <div id="pack_bag" class="card margin_between" data-name="Pack-Your-Bags-Loose-Crop-Top" data-price="15" data-img="./assets/img/Tote_Bag-White-No_One_Likes_A_Shady_Beach_760x6077.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/pack_your_bags_loose_crop_760x090c.jpg" width="262.5" height="262.5">
+                                    <p>
+                                          <h5>
+                                           Pack Your Bags Loose Crop Top
+                                        </h5>
+                                         <h5>
+                                            $15
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="pack" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="save_mermaid" class="card margin_between" data-name="Save-Our-Mermaids-T-strap-Tank" data-price="14" data-img="./assets/img/save_our_mermaids_tstrap_760x3368.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                   <img class="img-responsive" src="./assets/img/save_our_mermaids_tstrap_760x3368.jpg" width="262.5" height="262.5">
+                                    <p>
+                                       <h5>
+                                           Save Our Meermaids T-strap Tank
+                                        </h5>
+                                         <h5>
+                                            $18
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="mermaid" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="adventure_boy" class="card margin_between" data-name="Let's-Adventure-Oversized-Boyfriend-Tee" data-price="18" data-img="./assets/img/adventurewh1_760xe613.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/adventurewh1_760xe613.jpg" width="262.5" height="262.5">
+                                    <p>
+                                        <h5>
+                                          Let's Adventure Oversized Boyfriend Tee
+                                        </h5>
+                                         <h5>
+                                            $20
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="adventure" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================ITEMS FOR THE SORTING TOOL=========== -->
+
+
+        <div class="hidden_items">
+       <!-- =============================FOR $50=========================== -->
+        <div id="btwn_20_30">
+            <div class="row">
+                        <div class="col-md-3">
+                            <div class="card margin_between" data-name="Namaste-Beaches-Hi-Lo-Muscle-Tank" data-price="17" data-img="./assets/img/namaste_beaches_hi-lo_muscle_tank_760xa795.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/namaste_beaches_hi-lo_muscle_tank_760xa795.jpg" width="262.5" height="262.5">
+                                    <p>
+                                        <h5>
+                                            Namaste Beaches Hi-Lo Muscle Tank
+                                        </h5>
+                                         <h5>
+                                            $17 
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="muscle" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-3">
+                            <div id="beach_canvas" class="card margin_between" data-name="No-one-Likes-a-Shady-Beach-Canvas" data-price="14" data-img="./assets/img/Tote_Bag-White-No_One_Likes_A_Shady_Beach_760x6077.jpg" data-unit="per item">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/Tote_Bag-White-No_One_Likes_A_Shady_Beach_760x6077.jpg" width="262.5" height="262.5">
+                                    <p>
+                                          <h5>
+                                           No one Likes a Shady Beach Canvas
+                                        </h5>
+                                         <h5>
+                                            $14
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="beach" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="shady_beach" class="card margin_between" data-name="No-One-likes-a-Shady-Beach-Oversized-Boyfriend-Tee" data-price="14" data-img="./assets/img/mermaid_at_heart_loose_crop_760xe584.jpg" data-unit="per Kg">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/no-one-likes-a-shady-beach---blk-oversized-tee_760x48df.jpg" width="262.5" height="262.5">
+                                    <p>
+                                       <h5>
+                                          No One likes a Shady Beach Oversized Boyfriend Tee
+                                        </h5>
+                                         <h5>
+                                            $14
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="shady" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="racer_container" class="col-md-3">
+                            <div class="card margin_between" data-name="No-One-Likes-a-Shady-Beach-Long-Racer-Tank" data-price="15" data-img="./assets/img/namastay_in_bed_sports_bra_760x541c.jpg" data-unit="per Kg">
+                                <div class="image_zoom">
+                                    <img class="img-responsive" src="./assets/img/No-one-likes-a-shady-beach---racer-tank_760xf79d.jpg" width="262.5" height="262.5">
+                                    <p>
+                                        <h5>
+                                           No One Likes a Shady Beach Long Racer Tank
+                                        </h5>
+                                         <h5>
+                                            $17
+                                        </h5>
+                                    </p>
+									<button class="checkout_btn">ADD TO CART</button>
+                                    <p id="racer" class="added_notification">
+                                        ADDED TO CART
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            
+          <!-- ================================END OF FOR $50==================== -->
+
+
+
+
+<!-- ==========================END OF ITEMS FOR SORTING TOOL============== -->
+
+
+
+
+                </div>
+            </div>
+        </div>
+     </div>
+
+
+    <!-- FOOTER ROW -->
+
+    <footer  class="container-fluid bg-4">
+       <div class="row">
+           <div class="col-md-1">
+               
+           </div>
+           <div class="col-md-3  text-left">
+               <header>
+                   CONTACT US
+               </header>
+               <p class="margin_between">
+                   Email: customerservice@qtee.com<br/>
+
+                    Tel: 800.480.1488<br/>
+                    (Monday- Friday 
+                    8:00 am - 4:30 pm, PT)
+               </p>
+           </div>
+           <div class="col-md-2">
+                <div class=" text-center links margin_between">
+                    <header>
+                   LINKS
+                   </header>
+                   <div>
+                       <a href="#">
+                       GIFT CARDS
+                   </a>
+                   <a href="#">
+                       AFFILIATE
+                   </a>
+                   <a href="#">
+                      QTEE FAQ'S
+                   </a>
+                   <a href="#">
+                       RETURNS & EXCHANGES
+                   </a>
+                   <a href="#">
+                      SIZE CHARTS
+                   </a>
+                   <a href="#">
+                      PRIVACY POLICY
+                   </a>
+                   <a href="#">
+                    BLOG
+                   </a> 
+                    </div>
+               </div>
+           </div>
+           <div class="col-md-3">
+               <header class="footer_email_arrow_right margin_between">
+                   JOIN OUR MAILING LIST
+               </header>
+               <form action="/page" method="post">
+                   <input style="color: black" type="email" placeholder="Enter email" name="bottom" required>
+                       <button id="email_subscribe" type="submit"><i class="fa fa-arrow-right" style="color: black"></i></button>
+               </form>
+           </div>
+           <div class="col-md-3">
+                <div class="foot_social text-center margin_between">
+                    <header>
+                   SOCIAL NETWORKS
+                   </header>
+                   <div class="row">
+                       <ul style="padding-left:0px;">
+                           <li>
+                               <i class="fa fa-facebook"></i>
+                           </li>
+                           <li>
+                               <i class="fa fa-twitter"></i>
+                           </li>
+                           <li>
+                               <i class="fa fa-pinterest"></i>
+                           </li>
+                           <li>
+                                 <i class="fa fa-instagram"></i>
+                           </li>
+                       </ul>
+                   </div>
+                </div>
+           </div>
+       </div>
+    </footer>
+    </div>
+
+
+
+
+   <script type="text/javascript" src="./assets/plugins/jquery.js"></script>
+   <script type="text/javascript" src="./assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./assets/js/main.js"></script>
+    <script type="text/javascript">
+		  /*=====setting the products to scroll into view=====*/
+			var products = document.getElementById('products');
+			products.scrollIntoView();
+		
+		 /*=====End of setting the products to scroll to top=====*/
+		
+    /*=====the cart menus=====*/
+        var cartWidth =  document.getElementById("sidenav");
+        var pageWidth = document.getElementById("main");
+    function openCartMenu() {
+        cartWidth.style.width = "300px";
+        pageWidth.style.marginRight = "300px";
+        document.getElementById("main").style.opacity = "0.2";
+    }
+    function closeCartMenu() {
+        document.getElementById("sidenav").style.width = "0";
+        document.getElementById("main").style.marginRight = "0";
+        document.getElementById("main").style.opacity = "1";
+    }
+    /*==========OPERATING THE CART =============*/
+     document.onreadystatechange= function(){
+        if(document.readyState === "complete"){
+            app.cartCtrl()
+            }
+     };
+    // ====================shopping by budget==================
+            //======the response====
+                function budget(){
+                    var btwn_20_30 = $('#btwn_20_30').html();
+                    var input = $("#sort_tool").val();
+                    if(input >= 1 && input <= 100000000){
+                        $('#budgetItem').html(btwn_20_30);
+                    }
+                };
+        
+        // ========================END OF CHECK FUNCTION==================
+                    // ==========Handling items add to cart notifications===========
+            $(".added_notification").fadeOut(10);
+            // ========animations for first box=====
+            $("#aloha_container").click(function(){
+                $("#aloha_notify").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+ })
+            // ========animations for second box=====
+            $("#crazy_container").click(function(){
+                $("#crazy_notify").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for third box=====
+            $("#dos_container").click(function(){
+                $("#dos").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for fourth box=====
+            $("#glaze_container").click(function(){
+                $("#glaze").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for fifth box=====
+            $("#going_container").click(function(){
+                $("#going").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for sixth box=====*
+            $("#playa_container").click(function(){
+                $("#playa").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for seventh box=====
+            $("#mermaid_container").click(function(){
+                $("#mermaid_top").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+            })
+            // ========animations for eighth box=====
+            $("#namastay_container").click(function(){
+                $("#namastay").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+            })
+            // ========animations for ninth box=====
+            $("#muscle_container").click(function(){
+                $("#muscle").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for tenth box=====
+            $("#beach_canvas").click(function(){
+                $("#beach").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for eleven box=====
+            $("#shady_beach").click(function(){
+                $("#shady").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for 12th box=====
+            $("#racer_container").click(function(){
+                $("#racer").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for 13th box=====
+            $("#open_back").click(function(){
+                $("#open").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for 14th box=====
+            $("#pack_bag").click(function(){
+                $("#pack").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+            // ========animations for 15th box=====
+            $("#save_mermaid").click(function(){
+                $("#mermaid").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+            })
+            // ========animations for 16th box=====
+            $("#adventure_boy").click(function(){
+                $("#adventure").fadeIn("fast");
+                $(".added_notification").fadeOut("3000");
+})
+    </script>
+</body>
+</html>
